@@ -1,6 +1,6 @@
 const express = require("express");
 const app = express();
-const port = 9000;
+const port = 8000;
 
 // importing the router which is exported by routes //
 const router = require("./routes/index");
@@ -14,4 +14,5 @@ app.listen(function (err) {
 	} else {
 		console.log(`Server Is Live At Port: ${port}`);
 	}
+	return;
 });
