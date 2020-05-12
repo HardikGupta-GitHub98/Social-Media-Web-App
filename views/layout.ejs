@@ -2,7 +2,9 @@
 
 <head>
     <link rel="stylesheet" href="/CSS/layout.css">
+    <%-style %> 
     <title><%= title %></title>
+    
 </head>
 <body>
     <%-include("_header.ejs"); %>
@@ -10,5 +12,6 @@
     <%- body %> 
 
     <%-include("_footer.ejs"); %>
+    <%-script %> 
 </body>
 </html>
