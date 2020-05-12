@@ -4,9 +4,17 @@ const express = require("express");
 
 //using the router function of the express module
 const router = express.Router();
-console.log("router's index loded");
 
+// Directing any Get Request for "/"
 const homeController = require("../Controllers/home_Controller");
-
 router.get("/", homeController.home);
+
+////////////////////Directing any request For the "/users/"////////////////..
+
+// Importing the Router For Users
+const userRouter = require("./users");
+///////using this usersRouter To direct The "/users" request to the users file///
+router.use("/users", userRouter);
+
+//Exporting the router to the main index.js file
 module.exports = router;

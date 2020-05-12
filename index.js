@@ -3,7 +3,7 @@ const app = express();
 const port = 8000;
 
 // importing the router which is exported by routes //
-const router = require("./routes");
+const router = require("./routes/index");
 
 // Middleware To use the above imported router from ////routes/index.js
 app.use("/", router);
