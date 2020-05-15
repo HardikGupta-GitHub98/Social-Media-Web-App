@@ -1,9 +1,17 @@
 const express = require("express");
+// Importing Cookie Parser
+const cookieParser = require("cookie-parser");
 const app = express();
 const port = 8000;
 const db = require("./config/mongoose.js");
 // Importing express-ejs-layouts
 const expressLayouts = require("express-ejs-layouts");
+
+// Encoding Every request and Its Body
+app.use(express.urlencoded);
+
+// MiddleWare To use Cookie-Parser
+app.use(cookieParser);
 
 // Settting up the Assets Folder For Static Files
 const assets = express.static("./assets");

@@ -1,0 +1,17 @@
+<link rel="stylesheet" href="/CSS/user_sign_in.css" />
+
+<body>
+	<h1>Social Web App :<%= title %></h1>
+
+	<form action="/users/createSession" id="signInForm">
+		<input type="email" name="email" placeholder="Your Email" required />
+		<input
+			type="password"
+			name="password"
+			placeholder="Enter Your Password"
+			required
+		/>
+
+		<input type="submit" />
+	</form>
+</body>

@@ -1,0 +1,9 @@
+#signUpForm {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: center;
+}
+input {
+	margin-top: 10px;
+}
