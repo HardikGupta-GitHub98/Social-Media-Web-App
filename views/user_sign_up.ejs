@@ -3,7 +3,7 @@
 <body>
 	<h1>Social Web App :<%= title %></h1>
 
-	<form action="/users/createUser" id="signUpForm">
+	<form action="/users/createUser" id="signUpForm" method="POST">
 		<input type="text" name="name" placeholder="Your Name" required />
 		<input type="email" name="email" placeholder="Your Email" required />
 		<input
@@ -14,7 +14,7 @@
 		/>
 		<input
 			type="password"
-			name="Confirm-password"
+			name="confirm_password"
 			placeholder="Re-enter Your Password"
 			required
 		/>

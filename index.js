@@ -8,10 +8,10 @@ const db = require("./config/mongoose.js");
 const expressLayouts = require("express-ejs-layouts");
 
 // Encoding Every request and Its Body
-app.use(express.urlencoded);
+app.use(express.urlencoded());
 
 // MiddleWare To use Cookie-Parser
-app.use(cookieParser);
+app.use(cookieParser());
 
 // Settting up the Assets Folder For Static Files
 const assets = express.static("./assets");
