@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
-
+//Importing the passport JS
+const passport = require("passport");
 const usersController = require("../Controllers/users_Controller");
 
 /// The Path of the first Angument in .get function is relative to
@@ -13,14 +14,21 @@ router.get("/", function (req, res) {
 });
 
 // To handle the requests following "/Users"   eg="/Users/profile"
-router.get("/profile", usersController.profile);
+router.get("/profile", passport.checkAuthentication, usersController.profile);
 // To Render Form To Sign In For An Existing User
 router.get("/user-sign-in", usersController.user_sign_in);
 //  To Render SignUp Form
 router.get("/user-sign-up", usersController.user_sign_up);
 // To Create A user In The DataBase
 router.post("/createUser", usersController.create);
-// To Get Information Of a User
-router.get("/createSession", usersController.createSession);
+
+// For this Router We give three arguments instead of two
+// third argument is passort as a middleware to authenticate user
+router.post(
+	"/createSession",
+	passport.authenticate("local", { failureRedirect: "/users/user-sign-in" }),
+	usersController.createSession
+);
+router.get("/user-sign-out", usersController.destroySession);
 
 module.exports = router;

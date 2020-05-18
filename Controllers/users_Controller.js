@@ -1,19 +1,32 @@
 const User = require("../models/user.js");
 
 module.exports.profile = function (req, res) {
-	return res.end("<h1>User Profile</h1>");
+	return res.render("user_profile", {
+		title: "Verified User",
+		// user: user,
+	});
 };
 
 module.exports.user_sign_in = function (req, res) {
-	res.render("user_sign_in", {
-		title: "User Sign In",
-	});
+	if (req.isAuthenticated()) {
+		res.redirect("/users/profile");
+	} else {
+		res.render("user_sign_in", {
+			title: "User Sign In",
+		});
+	}
+	return;
 };
 
 module.exports.user_sign_up = function (req, res) {
-	res.render("user_sign_up", {
-		title: "User Sign Up",
-	});
+	if (req.isAuthenticated()) {
+		res.redirect("/users/profile");
+	} else {
+		res.render("user_sign_up", {
+			title: "User Sign Up",
+		});
+	}
+	return;
 };
 module.exports.create = function (req, res) {
 	if (req.body.password != req.body.confirm_password) {
@@ -38,6 +51,13 @@ module.exports.create = function (req, res) {
 		return;
 	});
 };
+
+// Cerating a Session For the user When Signed In
 module.exports.createSession = function (req, res) {
-	return;
+	return res.redirect("/users/profile");
+};
+
+module.exports.destroySession = function (req, res) {
+	req.logout();
+	return res.redirect("/");
 };
