@@ -21,6 +21,6 @@ router.get("/user-sign-up", usersController.user_sign_up);
 // To Create A user In The DataBase
 router.post("/createUser", usersController.create);
 // To Get Information Of a User
-router.get("/createSession", usersController.createSession);
+router.post("/createSession", usersController.createSession);
 
 module.exports = router;

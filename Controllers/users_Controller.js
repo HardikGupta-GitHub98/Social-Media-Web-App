@@ -1,7 +1,20 @@
 const User = require("../models/user.js");
 
 module.exports.profile = function (req, res) {
-	return res.end("<h1>User Profile</h1>");
+	const id = req.cookies.user_id;
+	User.findById(id, function (err, user) {
+		if (err) {
+			console.log(`Error In Finding The User ${err}`);
+		} else {
+			res.render("user_profile", {
+				title: `Verified User`,
+				name: user.name,
+				email: user.email,
+				password: user.password,
+			});
+		}
+	});
+	// return res.end("<h1>User Profile</h1>");
 };
 
 module.exports.user_sign_in = function (req, res) {
@@ -39,5 +52,36 @@ module.exports.create = function (req, res) {
 	});
 };
 module.exports.createSession = function (req, res) {
-	return;
+	User.findOne({ email: req.body.email }, function (err, user) {
+		if (err) {
+			// If there is Some Error in Looking for the Email in the DB
+			console.log(`Error In Looking For The Email ${err}`);
+			res.redirect("back");
+		} else if (user) {
+			// If the Entered Password Does'nt match the one in DB for the entered email
+			if (user.password != req.body.password) {
+				console.log(`Entered Password Is Incorrect!!!`);
+				res.redirect("back");
+			} else {
+				// If the password Matches then the user is redirected to Profile PAge
+				res.cookie("user_id", user.id);
+				console.log(user._id);
+				// res.render("user_profile", {
+				// 	title: "Signed In User",
+				// 	name: user.name,
+				// 	email: req.body.email,
+				// 	password: user.password,
+				// });
+				res.redirect("/users/profile");
+			}
+		} else {
+			// if the User{Email} is Not Found IN DB
+			console.log(`Entered Email ${req.body.email}// Not Found In DB`);
+			res.redirect("back");
+		}
+		return;
+	});
 };
+// module.exports.createSession = function (req, res) {
+// 	return res.redirect("/users/profile");
+// };
