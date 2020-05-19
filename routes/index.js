@@ -19,5 +19,8 @@ router.use("/users", userRouter);
 const postRouter = require("./posts");
 router.use("/posts", postRouter);
 
+const commentRouter = require("./comments");
+router.use("/comments", commentRouter);
+
 //Exporting the router to the main index.js file
 module.exports = router;
