@@ -1,4 +1,32 @@
 <link rel="stylesheet" href="/CSS/home.css" />
 <body>
 	<h1>Social Web App :<%= title %></h1>
+
+	<section>
+		<h3>Posts</h3>
+		<form action="/posts/create" method="POST">
+			<textarea
+				name="content"
+				id=""
+				cols="30"
+				rows="3"
+				placeholder="type Your Post"
+			></textarea>
+			<button type="submit" value="post">Post</button>
+		</form>
+	</section>
+	<div id="user-post-container">
+		<ul>
+			<li>
+				<% for(post of posts) {%>
+				<p>
+					<%= post.content %>
+					<br />
+					<%= post.user.name %>
+				</p>
+
+				<%}%>
+			</li>
+		</ul>
+	</div>
 </body>

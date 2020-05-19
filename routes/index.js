@@ -16,5 +16,8 @@ const userRouter = require("./users");
 ///////using this usersRouter To direct The "/users" request to the users file///
 router.use("/users", userRouter);
 
+const postRouter = require("./posts");
+router.use("/posts", postRouter);
+
 //Exporting the router to the main index.js file
 module.exports = router;
