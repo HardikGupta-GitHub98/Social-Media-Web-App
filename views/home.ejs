@@ -4,6 +4,7 @@
 
 	<section>
 		<h3>Posts</h3>
+		<% if(locals.user){ %>
 		<form action="/posts/create" method="POST">
 			<textarea
 				name="content"
@@ -14,6 +15,7 @@
 			></textarea>
 			<button type="submit" value="post">Post</button>
 		</form>
+		<% } %>
 	</section>
 	<div id="user-post-container">
 		<ul>

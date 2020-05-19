@@ -1,6 +1,7 @@
 const Post = require("../models/post");
 
 module.exports.create = function (req, res) {
+	// if (req.isAuthenticated()) {
 	Post.create(
 		{
 			content: req.body.content,
@@ -15,4 +16,9 @@ module.exports.create = function (req, res) {
 			return;
 		}
 	);
+	// } else {
+	// 	console.log(`You Are Not Singed In`);
+
+	// 	res.redirect("/users/user-sign-in");
+	// }
 };
