@@ -14,7 +14,17 @@ router.get("/", function (req, res) {
 });
 
 // To handle the requests following "/Users"   eg="/Users/profile"
-router.get("/profile", passport.checkAuthentication, usersController.profile);
+router.get(
+	"/profile/:id",
+	passport.checkAuthentication,
+	usersController.profile
+);
+
+router.post(
+	"/updateDetails/:id",
+	passport.checkAuthentication,
+	usersController.updateDetails
+);
 // To Render Form To Sign In For An Existing User
 router.get("/user-sign-in", usersController.user_sign_in);
 //  To Render SignUp Form

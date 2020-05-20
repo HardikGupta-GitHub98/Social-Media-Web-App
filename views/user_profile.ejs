@@ -1,6 +1,25 @@
 <body>
 	<h1><%= title %></h1>
-	<h2>User's Name : <%= user.name %></h2>
-	<h2>User's Email : <%= user.email %></h2>
-	<h2>User's Password : <%= user.password %></h2>
+	<% if(user.id == porfile_user.id){ %>
+	<h2>Logged In User</h2>
+	<form action="/users/updateDetails/<%=porfile_user.id%>" method="post">
+		<input
+			type="text"
+			name="name"
+			value="<%= user.name %>"
+			placeholder="YOUR NAME"
+		/>
+		<input
+			type="email"
+			name="email"
+			value="<%= user.email%>"
+			placeholder="Your Email"
+		/>
+		<button type="submit">UPDATE</button>
+	</form>
+
+	<% } else {%>
+	<h2>Name : <%= porfile_user.name %></h2>
+	<h2>Email : <%= porfile_user.email %></h2>
+	<% } %>
 </body>

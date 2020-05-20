@@ -1,10 +1,30 @@
 const User = require("../models/user.js");
 
 module.exports.profile = function (req, res) {
-	return res.render("user_profile", {
-		title: "Verified User",
-		// user: user,
+	User.findById(req.params.id, function (err, user) {
+		return res.render("user_profile", {
+			title: "Profile Page",
+			porfile_user: user,
+		});
 	});
+};
+module.exports.updateDetails = function (req, res) {
+	if (req.user.id == req.params.id) {
+		User.findByIdAndUpdate(req.params.id, req.body, function (err, user) {
+			if (err) {
+				console.log(`Error In FInd User To Update ${err}`);
+			} else if (!user) {
+				// res.status(200).send("Updated Successfully");
+				console.log(`User Not Found`);
+			} else {
+				console.log(`Profile Updated SuccessFully`);
+			}
+		});
+	} else {
+		res.status(401).send("Unauthorised");
+	}
+	res.redirect("/");
+	return;
 };
 
 module.exports.user_sign_in = function (req, res) {
