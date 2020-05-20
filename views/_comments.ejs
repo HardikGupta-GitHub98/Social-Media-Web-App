@@ -1,0 +1,13 @@
+<% for(comment of post.comments){ %>
+<div class="Comments-container">
+	<p>
+		<% if (locals.user && (comment.user.id == locals.user.id || post.user.id==
+		locals.user.id)) { %>
+		<a href="/comments/deleteComment/<%=comment.id%>">X</a>
+		<% } %> <%= comment.content %>
+		<br />
+		<%= comment.user.name %>
+	</p>
+</div>
+
+<% } %>
