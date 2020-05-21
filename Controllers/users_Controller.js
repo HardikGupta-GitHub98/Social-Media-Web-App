@@ -74,10 +74,12 @@ module.exports.create = function (req, res) {
 
 // Cerating a Session For the user When Signed In
 module.exports.createSession = function (req, res) {
+	req.flash("success", "Signed In Successfully");
 	return res.redirect("/");
 };
 
 module.exports.destroySession = function (req, res) {
 	req.logout();
+	req.flash("success", "Signed Out Successfully");
 	return res.redirect("/");
 };

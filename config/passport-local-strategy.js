@@ -6,12 +6,15 @@ passport.use(
 	new LocalStrategy(
 		{
 			usernameField: "email",
+			// To pass req as a variable to the callback function
+			passReqToCallback: true,
 		},
-		function (email, password, done) {
+		function (req, email, password, done) {
 			// done is a callback function inside the passport js
 			// find a user and establish identity
 			User.findOne({ email: email }, function (err, user) {
 				if (err) {
+					req.flash("error", err);
 					console.log(`Error In Finding User ::${err}`);
 					// done takes two arguments
 					// the first one Is error If it exists
@@ -22,6 +25,7 @@ passport.use(
 				}
 				//if user doesnt exist in DB or Password Is Incorrect
 				else if (!user || user.password != password) {
+					req.flash("error", `Invalid username/Password`);
 					console.log(`Invalid username/Password`);
 
 					// the second argument of done tells us that the user is noy authenticated

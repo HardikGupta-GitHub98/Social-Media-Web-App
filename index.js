@@ -14,7 +14,11 @@ const MongoStore = require("connect-mongo")(session);
 
 // Importing express-ejs-layouts
 const expressLayouts = require("express-ejs-layouts");
+// Importing CONNECT-FLASH
+const flash = require("connect-flash");
 
+// Using Custom MiddleWre From Config For Flash Messages;
+const customMiddleware = require("./config/customMiddlware");
 // Encoding Every request and Its Body
 app.use(express.urlencoded());
 
@@ -66,6 +70,12 @@ app.use(passport.initialize());
 app.use(passport.session());
 // to send the user's data to the views
 app.use(passport.setAuthenticatedUser);
+
+// Using Connect-Flash To Store Messages Inside the Session Cookie
+app.use(flash());
+
+// Using the Custom middleWare
+app.use(customMiddleware.setFlash);
 
 // importing the router which is exported by routes //
 const router = require("./routes/index");
