@@ -12,8 +12,18 @@ module.exports.create = function (req, res) {
 				req.flash("error", err);
 				console.log(`Error In Storing The Post ${err}`);
 			} else {
-				req.flash("success", "Posted Created Successfully");
-				res.redirect("/");
+				// After Converting the post request into AJAX
+				if (req.xhr) {
+					req.flash("success", "Posted Created Successfully");
+					res.status(200).json({
+						data: {
+							post: post,
+						},
+						message: "Post Created",
+					});
+				}
+
+				// res.redirect("/");    // This Was Before Converting Into The AJAX//
 			}
 			return;
 		}

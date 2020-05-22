@@ -1,4 +1,4 @@
-<div class="list-post">
+<div id="post-<%=post.id%>">
 	<p>
 		<% if(locals.user && locals.user.id == post.user.id) { %>
 		<a href="/posts/deletePost/<%= post.id%>">X</a>
