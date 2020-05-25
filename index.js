@@ -27,6 +27,9 @@ app.use(cookieParser());
 
 // Settting up the Assets Folder For Static Files
 const assets = express.static("./assets");
+
+// make the uploads path available to the browser
+app.use("/uploads", express.static(__dirname + "/uploads"));
 app.use(assets);
 
 // Middleware to use Layouts;

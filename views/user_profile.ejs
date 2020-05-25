@@ -2,6 +2,7 @@
 	<h1><%= title %></h1>
 	<% if(user.id == porfile_user.id){ %>
 	<h2>Logged In User</h2>
+	<img src="<%= user.avatar %>" alt="<%= user.name %>" width="100px" />
 	<form
 		action="/users/updateDetails/<%=porfile_user.id%>"
 		method="post"

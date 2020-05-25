@@ -1,4 +1,6 @@
 const User = require("../models/user.js");
+const fs = require("fs");
+const path = require("path");
 
 module.exports.profile = function (req, res) {
 	User.findById(req.params.id, function (err, user) {
@@ -35,13 +37,20 @@ module.exports.updateDetails = async function (req, res) {
 			if (err) {
 				console.log(`Multer Error ${err}`);
 			} else {
-				user.name = req.body.name;
-				user.email = req.body.email;
-				if (req.file) {
-					user.avatar = User.avatarPath + "/" + req.file.filename;
+				try {
+					user.name = req.body.name;
+					user.email = req.body.email;
+					if (req.file) {
+						if (user.avatar) {
+							fs.unlinkSync(path.join(__dirname, "..", user.avatar));
+						}
+						user.avatar = User.avatarPath + "/" + req.file.filename;
+					}
+					user.save();
+					return res.redirect("back");
+				} catch (error) {
+					console.log(error);
 				}
-				user.save();
-				return res.redirect("back");
 			}
 		});
 	}
