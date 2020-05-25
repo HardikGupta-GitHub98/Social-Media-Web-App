@@ -34,15 +34,38 @@ module.exports.create = function (req, res) {
 	// 	res.redirect("/users/user-sign-in");
 	// }
 };
-module.exports.deletePost = function (req, res) {
-	Post.findById(req.params.id, function (err, post) {
-		if (err) {
-			req.flash("error", err);
-			console.log(`Error In Looking For The Post To Delete It`);
-		} else if (post) {
+
+// module.exports.deletePost = function (req, res) {
+// 	Post.findById(req.params.id, function (err, post) {
+// 		if (err) {
+// 			req.flash("error", err);
+// 			console.log(`Error In Looking For The Post To Delete It`);
+// 		} else if (post) {
+// 			if (post.user == req.user.id) {
+// 				post.remove();
+// 				Comment.deleteMany({ post: post._id }, function (err) {});
+// 				req.flash("success", "Post And Related Comments Deleted");
+// 			} else {
+// 				req.flash("error", `You Are Not Authorised To Delete The Post`);
+// 				console.log(`You Are Not Authorised To Delete The Post`);
+// 			}
+// 		} else {
+// 			req.flash("error", `Post Not Found`);
+// 			console.log(`Post Not Found`);
+// 		}
+// 		return res.redirect("back");
+// 	});
+// };
+
+//////////// Converting DeletePost TO ASYNC AWAIT ; ///////////////////////////////////
+
+module.exports.deletePost = async function (req, res) {
+	try {
+		let post = await Post.findById(req.params.id);
+		if (post) {
 			if (post.user == req.user.id) {
 				post.remove();
-				Comment.deleteMany({ post: post._id }, function (err) {});
+				await Comment.deleteMany({ post: post._id });
 				req.flash("success", "Post And Related Comments Deleted");
 			} else {
 				req.flash("error", `You Are Not Authorised To Delete The Post`);
@@ -52,6 +75,9 @@ module.exports.deletePost = function (req, res) {
 			req.flash("error", `Post Not Found`);
 			console.log(`Post Not Found`);
 		}
-		return res.redirect("back");
-	});
+		res.redirect("back");
+	} catch (err) {
+		console.log("Error", err);
+	}
+	return;
 };
