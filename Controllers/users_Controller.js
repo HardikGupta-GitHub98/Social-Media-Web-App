@@ -8,23 +8,43 @@ module.exports.profile = function (req, res) {
 		});
 	});
 };
-module.exports.updateDetails = function (req, res) {
+// module.exports.updateDetails = function (req, res) {
+// 	if (req.user.id == req.params.id) {
+// 		User.findByIdAndUpdate(req.params.id, req.body, function (err, user) {
+// 			if (err) {
+// 				console.log(`Error In FInd User To Update ${err}`);
+// 			} else if (!user) {
+// 				// res.status(200).send("Updated Successfully");
+// 				console.log(`User Not Found`);
+// 			} else {
+// 				console.log(`Profile Updated SuccessFully`);
+// 			}
+// 		});
+// 	} else {
+// 		res.status(401).send("Unauthorised");
+// 	}
+// 	res.redirect("/");
+// 	return;
+// };
+
+// updateDetails Converted To Async Await
+module.exports.updateDetails = async function (req, res) {
 	if (req.user.id == req.params.id) {
-		User.findByIdAndUpdate(req.params.id, req.body, function (err, user) {
+		let user = await User.findById(req.params.id);
+		User.uploadedAvatar(req, res, function (err) {
 			if (err) {
-				console.log(`Error In FInd User To Update ${err}`);
-			} else if (!user) {
-				// res.status(200).send("Updated Successfully");
-				console.log(`User Not Found`);
+				console.log(`Multer Error ${err}`);
 			} else {
-				console.log(`Profile Updated SuccessFully`);
+				user.name = req.body.name;
+				user.email = req.body.email;
+				if (req.file) {
+					user.avatar = User.avatarPath + "/" + req.file.filename;
+				}
+				user.save();
+				return res.redirect("back");
 			}
 		});
-	} else {
-		res.status(401).send("Unauthorised");
 	}
-	res.redirect("/");
-	return;
 };
 
 module.exports.user_sign_in = function (req, res) {

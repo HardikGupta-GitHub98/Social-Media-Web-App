@@ -2,7 +2,11 @@
 	<h1><%= title %></h1>
 	<% if(user.id == porfile_user.id){ %>
 	<h2>Logged In User</h2>
-	<form action="/users/updateDetails/<%=porfile_user.id%>" method="post">
+	<form
+		action="/users/updateDetails/<%=porfile_user.id%>"
+		method="post"
+		enctype="multipart/form-data"
+	>
 		<input
 			type="text"
 			name="name"
@@ -15,6 +19,7 @@
 			value="<%= user.email%>"
 			placeholder="Your Email"
 		/>
+		<input type="file" name="avatar" id="" />
 		<button type="submit">UPDATE</button>
 	</form>
 
