@@ -22,5 +22,9 @@ router.use("/posts", postRouter);
 const commentRouter = require("./comments");
 router.use("/comments", commentRouter);
 
+//  Router For API
+const apiRouter = require("./api");
+router.use("/api", apiRouter);
+
 //Exporting the router to the main index.js file
 module.exports = router;
