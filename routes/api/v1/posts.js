@@ -4,7 +4,9 @@ const express = require("express");
 
 //using the router function of the express module
 const router = express.Router();
-const apiRouter = require("./v1/index");
-router.use("/v1", apiRouter);
 
+// Importing the posts_api controller
+const posts_api = require("../../../Controllers/api/v1/posts_api");
+router.get("/", posts_api.index);
+router.delete("/:id", posts_api.deletePost);
 module.exports = router;
