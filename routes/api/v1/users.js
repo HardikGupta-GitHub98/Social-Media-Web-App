@@ -5,12 +5,7 @@ const express = require("express");
 //using the router function of the express module
 const router = express.Router();
 
-// Importing the posts Router
-const postsRouter = require("./posts");
-router.use("/posts", postsRouter);
-
-// Importing the Users Router
-const usersRouter = require("./users");
-router.use("/users", usersRouter);
+const usersApi = require("../../../Controllers/api/v1/users_api");
+router.get("/createSession", usersApi.createSession);
 
 module.exports = router;

@@ -1,5 +1,5 @@
 const passport = require("passport");
-const LocalStrategy = require("passport-jwt").Strategy;
+const JWTStrategy = require("passport-jwt").Strategy;
 
 // Importing module to Extraxct JWT from the header .
 const ExtractJWT = require("passport-jwt").ExtractJwt;
@@ -10,7 +10,7 @@ const User = require("../models/user");
 let opts = {
 	// The Authos=risation is the key inside the header
 	// Inside the Authorisation is the Bearer key Which is the JWt
-	jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken,
+	jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
 	secretOrKey: "WebApp",
 };
 passport.use(

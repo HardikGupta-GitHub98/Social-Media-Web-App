@@ -23,11 +23,17 @@ module.exports.deletePost = async function (req, res) {
 	try {
 		let post = await Post.findById(req.params.id);
 		if (post) {
-			post.remove();
-			await Comment.deleteMany({ post: post._id });
-			res.json(200, {
-				message: "Post Ans Related Comments Deleted Successfully",
-			});
+			if (post.user == req.user.id) {
+				post.remove();
+				await Comment.deleteMany({ post: post._id });
+				res.json(200, {
+					message: "Post Ans Related Comments Deleted Successfully",
+				});
+			} else {
+				res.json(401, {
+					message: "Unauthorised",
+				});
+			}
 		}
 	} catch (err) {
 		res.json(500, {
