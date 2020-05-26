@@ -41,4 +41,15 @@ router.post(
 );
 router.get("/user-sign-out", usersController.destroySession);
 
+// Authentication Using GoogleOauth
+router.get(
+	"/auth/google",
+	passport.authenticate("google", { scope: ["profile", "email"] })
+);
+router.get(
+	"/auth/google/callback",
+	passport.authenticate("google", { failureRedirect: "/users/user-sign-in" }),
+	usersController.createSession
+);
+
 module.exports = router;
