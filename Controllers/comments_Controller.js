@@ -1,6 +1,9 @@
 const Post = require("../models/post");
 const Comment = require("../models/comment");
 
+// to send a mail to the user who commented //
+const commentsMailer = require("../mailers/comments_mailer");
+
 // module.exports.addComment = function (req, res) {
 // 	Post.findById(req.body.postID, function (err, post) {
 // 		if (err) {
@@ -43,6 +46,11 @@ module.exports.addComment = async function (req, res) {
 			});
 			post.comments.push(comment);
 			post.save();
+			// to send a mail to the user who commented //
+			comment = await comment.populate("user", "name email").execPopulate();
+			console.log(comment);
+
+			commentsMailer.newComment(comment);
 		} else {
 			console.log(`postID is Incorrect`);
 		}

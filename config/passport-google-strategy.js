@@ -31,7 +31,7 @@ passport.use(
 						User.create(
 							{
 								name: profile.displayname,
-								emaail: profile.emails[0].value,
+								email: profile.emails[0].value,
 								password: crypto.randomBytes(20).toString("hex"),
 							},
 							function (err, user) {
