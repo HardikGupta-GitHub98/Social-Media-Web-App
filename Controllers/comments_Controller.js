@@ -3,6 +3,8 @@ const Comment = require("../models/comment");
 
 // to send a mail to the user who commented //
 const commentsMailer = require("../mailers/comments_mailer");
+const queue = require("../config/kue");
+const commentsEmailWorker = require("../workers/comment_email_worker");
 
 // module.exports.addComment = function (req, res) {
 // 	Post.findById(req.body.postID, function (err, post) {
@@ -50,7 +52,14 @@ module.exports.addComment = async function (req, res) {
 			comment = await comment.populate("user", "name email").execPopulate();
 			console.log(comment);
 
-			commentsMailer.newComment(comment);
+			// commentsMailer.newComment(comment);
+			let job = queue.create("email", comment).save(function (err) {
+				if (err) {
+					console.log(`Error Inside the queue.create ${err}`);
+				} else {
+					console.log("JOb Created", job.id);
+				}
+			});
 		} else {
 			console.log(`postID is Incorrect`);
 		}
