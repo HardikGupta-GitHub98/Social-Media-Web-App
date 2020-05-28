@@ -26,5 +26,8 @@ router.use("/comments", commentRouter);
 const apiRouter = require("./api/index");
 router.use("/api", apiRouter);
 
+// Router For Likes
+const likesRouter = require("./likes");
+router.use("/likes", likesRouter);
 //Exporting the router to the main index.js file
 module.exports = router;
