@@ -6,6 +6,12 @@
 		<a href="/comments/deleteComment/<%=comment.id%>">X</a>
 		<% } %> <%= comment.content %>
 		<br />
+		<div id = "likes">
+			<h2 style="color:blue"><%= comment.likes.length%> </h2>
+			<form action="/likes/toggle/?id=<%=comment._id%>" method="post" id="comment-like-form">
+				<button type="button">Like Comment</button>
+			</form>
+		</div>
 		<%= comment.user.name %>
 	</p>
 </div>

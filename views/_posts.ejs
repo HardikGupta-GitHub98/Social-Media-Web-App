@@ -5,6 +5,12 @@
 		<% } %> <%= post.content %>
 		<br />
 		<small><%= post.user.name %></small>
+		<div id="likes">
+			<h2 style="color:blue" ><%= post.likes.length%> Likes</h2>
+			<form action="/likes/toggle/?id=<%=post._id%>" method="post" id="<%=post.id%>-like-form">
+				<button type="submit">Like Post</button>
+			</form>
+		</div>
 	</p>
 
 	<% if(locals.user) {%>

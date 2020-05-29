@@ -21,6 +21,13 @@ const flash = require("connect-flash");
 
 // Using Custom MiddleWre From Config For Flash Messages;
 const customMiddleware = require("./config/customMiddlware");
+
+// Requiring the SOCKET.IO AND USING IT
+const chatServer = require("http").Server(app);
+const chatSockets = require("./config/chat_sockets").chatSockets(chatServer);
+chatServer.listen(5000);
+console.log(`Chat Server Is Listening On Port :> ${5000}`);
+
 // Encoding Every request and Its Body
 app.use(express.urlencoded());
 

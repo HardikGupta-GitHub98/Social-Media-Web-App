@@ -4,6 +4,7 @@
     <link rel="stylesheet" href="/CSS/layout.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.js"></script>
+    <link rel="stylesheet" href="/CSS/chatbox.css">
     <%-style %> 
     <title><%= title %></title>
     
@@ -14,7 +15,7 @@
      
 
     <%- body %> 
-
+    <%-include("_chatbox.ejs"); %>
     <%-include("_footer.ejs"); %>
     <%-script %> 
     <script>
@@ -38,6 +39,7 @@
             
         }).show();
     <% } %>
+    
         
     </script>
     
