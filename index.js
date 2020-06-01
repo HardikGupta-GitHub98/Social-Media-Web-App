@@ -1,8 +1,20 @@
 const express = require("express");
+
+//Requiring the dotenv
+require("dotenv").config();
+// Requiring the morgan library for logging the file
+const logger = require("morgan");
+
+// Requirirng the environment variable file
+const environment = require("./config/environment");
 // Importing Cookie Parser
 const cookieParser = require("cookie-parser");
 const app = express();
-const port = 8000;
+const port = process.env.WEBAPP_PORT;
+console.log(process.env.NODE_ENV);
+
+console.log(process.env);
+
 const db = require("./config/mongoose.js");
 //Importing the express-session package and the passport
 // and passport local
@@ -35,15 +47,21 @@ app.use(express.urlencoded());
 app.use(cookieParser());
 
 // Settting up the Assets Folder For Static Files
-const assets = express.static("./assets");
+const assets = express.static(environment.asset_path);
 
 // make the uploads path available to the browser
 app.use("/uploads", express.static(__dirname + "/uploads"));
 app.use(assets);
 
+// Setting up mrogan to log files
+app.use(logger(environment.morgan.mode, environment.morgan.options));
 // Middleware to use Layouts;
 // It sholud be Imoprted Before Importing Routers
 app.use(expressLayouts);
+
+///////////////////
+app.get("env"); ///////////////////////
+//////////////////
 
 // Setting the Style tag and the Script Tags Of individual pages inside the head of the payout.ejs page
 // This should be just below the app.use(expressLayouts)
@@ -60,7 +78,7 @@ app.use(
 	session({
 		name: "social-media-app",
 		// TODO change the Secret Before Deployment
-		secret: "AnythingForNow",
+		secret: environment.session_cookie_key,
 		saveUninitialized: false,
 		resave: false,
 		cookie: {

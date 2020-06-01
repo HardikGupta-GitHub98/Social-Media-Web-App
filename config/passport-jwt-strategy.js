@@ -5,13 +5,14 @@ const JWTStrategy = require("passport-jwt").Strategy;
 const ExtractJWT = require("passport-jwt").ExtractJwt;
 ///////////////////////////////////////////////////
 const User = require("../models/user");
+const environment = require("./environment");
 
 //// key to encrypt the text from JWT
 let opts = {
 	// The Authos=risation is the key inside the header
 	// Inside the Authorisation is the Bearer key Which is the JWt
 	jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
-	secretOrKey: "WebApp",
+	secretOrKey: environment.jwt_key_or_secret,
 };
 passport.use(
 	new JWTStrategy(opts, function (jwtPayLoad, done) {

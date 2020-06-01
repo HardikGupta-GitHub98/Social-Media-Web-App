@@ -3,14 +3,15 @@ const googleStrategy = require("passport-google-oauth").OAuth2Strategy;
 const crypto = require("crypto");
 const User = require("../models/user");
 
+const environment = require("./environment");
+
 // New Strategy For Google Oauth
 passport.use(
 	new googleStrategy(
 		{
-			clientID:
-				"975622839403-lmpbsev171micvroki3m2sp7nk54spo2.apps.googleusercontent.com",
-			clientSecret: "OincxMWqMc1L8LHNwR1k3ZTi",
-			callbackURL: "http://localhost:8000/users/auth/google/callback",
+			clientID: environment.google_clientID,
+			clientSecret: environment.google_clientSecret,
+			callbackURL: environment.google_callbackURL,
 		},
 		function (accessToken, refreshToken, profile, done) {
 			// find the user with given credentials
@@ -30,7 +31,7 @@ passport.use(
 						// if not found then the user is asked to signup////////////
 						User.create(
 							{
-								name: profile.displayname,
+								name: profile.displayName,
 								email: profile.emails[0].value,
 								password: crypto.randomBytes(20).toString("hex"),
 							},
